@@ -2,6 +2,10 @@
 
 Welcome to the SmartUI SDK sample for Selenium Java with TestNG. This repository demonstrates how to integrate SmartUI visual regression testing with Selenium Java using TestNG framework.
 
+## Get your SmartUI project and token
+
+If you are new to SmartUI, follow [Running Your First Project on SmartUI](https://www.lambdatest.com/support/docs/smartui-running-your-first-project/) to create a project and obtain your **project token** and `smartui-web.json` configuration.
+
 ## Repository Structure
 
 ```
@@ -98,16 +102,18 @@ SmartUISnapshot.smartuiSnapshot(driver, "screenshot");
 
 ## 4. Execution and Commands
 
+Pass `--config smartui-web.json` to the SmartUI CLI so it uses this repository’s config (project id, token path, and build naming). Place it **before** `exec` (it is a global CLI option).
+
 ### Local Execution
 
 ```bash
-npx smartui exec -- mvn test -D suite=sdk-local.xml
+npx smartui --config smartui-web.json exec -- mvn test -D suite=sdk-local.xml
 ```
 
 ### Cloud Execution
 
 ```bash
-npx smartui exec -- mvn test -D suite=sdk-cloud.xml
+npx smartui --config smartui-web.json exec -- mvn test -D suite=sdk-cloud.xml
 ```
 
 ## Test Files
@@ -258,7 +264,7 @@ jobs:
           LT_USERNAME: ${{ secrets.LT_USERNAME }}
           LT_ACCESS_KEY: ${{ secrets.LT_ACCESS_KEY }}
         run: |
-          npx smartui exec -- mvn test -D suite=sdk-cloud.xml
+          npx smartui --config smartui-web.json exec -- mvn test -D suite=sdk-cloud.xml
 ```
 
 ### Jenkins Pipeline Example
@@ -288,7 +294,7 @@ pipeline {
         stage('Visual Tests') {
             steps {
                 sh 'npm install -g @lambdatest/smartui-cli'
-                sh 'npx smartui exec -- mvn test -D suite=sdk-cloud.xml'
+                sh 'npx smartui --config smartui-web.json exec -- mvn test -D suite=sdk-cloud.xml'
             }
         }
     }
